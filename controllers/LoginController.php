@@ -1,9 +1,8 @@
 <?php
 require_once('./library/Controller.php');
 class LoginController extends Library\Controller{
-    public function model($model){
+    public function __construct(){
         $this->loginModel = $this->model('login');
-        // var_dump($this->loginModel);
     }
     public function index(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -18,9 +17,27 @@ class LoginController extends Library\Controller{
             $_SESSION['old']['id_number'] = $post['id_number'];
             return false;
         }
-        // var_dump($this->loginModel);
-        // $voter = $this->loginModel->allWhereIdRow('voters', 'id_number', $post['id_number']);
-        // var_dump($voter);
+        //user voter ID Number to fetch corresponding voter
+        $voter = $this->loginModel->allWhereIdRow('voters','id_number',$post['id_number']);
+        if(empty($voter)){//if the user is not found, we return a message
+            $this->alertMessage($post['id_number'],'ID Number Not Registered');
+            return false;
+        }
+        if($voter[0]['soft_delete'] == 'Y'){
+            $this->alertMessage($post['id_number'],'ID Account Was Removed');
+            return false;
+        }
+        // var_dump('nigga jealous');
+        //authentic provided PIN with the one stored in the database
+        if($voter[0]['pin'] !== $post['pin']){
+            $this->alertMessage($post['id_number'],'Incorrect ID Number/PIN');
+            return false;
+        }
+        // //if voter has logged in, destroy all the sessions before creating new ones
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['voter']['names'] = $voter[0]['names'];
+        $_SESSION['voter']['id_number'] = $voter[0]['id_number'];
+        header('location:?page=home');
     }
 
     public function validateData($id_number){
@@ -28,6 +45,13 @@ class LoginController extends Library\Controller{
             $_SESSION['validation']['id_number'] = 'Invalid ID Number';
             return false;
         }
+        return true;
+    }
+
+    public function alertMessage($id,$message,$class = 'danger'){
+        $_SESSION['old']['id_number'] = $id;
+        $_SESSION['alert']['class'] = $class;
+        $_SESSION['alert']['message'] = $message;
         return true;
     }
 }
