@@ -6,7 +6,7 @@ class Controller {
         return new $model();
     }
 
-    public function view($view,$data = []){
+    public function view($view,$data = [],$count = 0){
         require_once('./views/'.$view.'.php');
     }
 }

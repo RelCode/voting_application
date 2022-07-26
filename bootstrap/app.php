@@ -6,7 +6,7 @@
         //controller name for the current page's controller
         $ctrl = ucfirst($page) . 'Controller';
         //include the controller file
-        require_once('./controllers/LoginController.php');
+        require_once('./controllers/'.$ctrl.'.php');
         //create the controller's object
         $controller = new $ctrl();
         $controller->index();

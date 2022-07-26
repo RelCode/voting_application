@@ -5,21 +5,18 @@
     <div class="collapse navbar-collapse" id="navbarToggler">
         <a class="navbar-brand d-sm-inline-block d-none" href="?page=home">Voting System</a>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <!-- <li class="nav-item">
-                <form class="form-inline my-2 my-lg-0">
-                    <div class="input-group">
-                        <input type="text" name="query" class="form-control" placeholder="Search For Video" aria-label="Search For Video" aria-describedby="basic-addon1">
-                        <div class="input-group-append">
-                            <button type="submit" name="submit" class="btn btn-dafault bg-light input-group-text"><span class="fa fa-search"></span></button>
-                        </div>
-                    </div>
-                </form>
-            </li> -->
             <?php
             if (isset($_SESSION['loggedIn'])) {
             ?>
-                <!-- <ul class="d-block d-sm-none pl-0 list-unstyled"> -->
-                    <?php //include './views/layouts/menu.options.php'; ?>
+                    <li class="nav-item">
+                        <a href="?page=candidates" class="nav-link">Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="?page=vote" class="nav-link">Vote</a>
+                    </li>
+                    <li class="nav-link">
+                        <nav href="?page=results" class="nav-item">Results</nav>
+                    </li>
                     <li class="nav-item">
                         <a href="?page=logout" class="nav-link">Logout</a>
                     </li>

@@ -32,5 +32,25 @@ class Database{
         }
         return $data;
     }
+    public function executeGetRowsQuery($query){
+        $data = [];
+        $stmt = $this->db->query($query);
+        if($stmt->rowCount() > 0){
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                array_push($data,$row);
+            }
+        }
+        return $data;
+    }
+    public function allRowCount($table){
+        $query = 'SELECT * FROM '.$table.'';
+        $stmt = $this->db->query($query);
+        return $stmt->rowCount();
+    }
+
+    public function current(){
+        $no = isset($_GET['no']) ? htmlentities($_GET['no'],ENT_QUOTES) : 1;
+        return $no;
+    }
 }
 date_default_timezone_set('Africa/Johannesburg');
