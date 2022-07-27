@@ -8,13 +8,13 @@
             <?php
             if (isset($_SESSION['loggedIn'])) {
             ?>
-                    <li class="nav-item">
+                    <li class="nav-item <?= $_GET['page'] == 'candidates' ? 'active' : '' ?>">
                         <a href="?page=candidates" class="nav-link">Candidates</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item <?= $_GET['page'] == 'vote' ? 'active' : '' ?>">
                         <a href="?page=vote" class="nav-link">Vote</a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link" <?= $_GET['page'] == 'results' ? 'active' : '' ?>>
                         <nav href="?page=results" class="nav-item">Results</nav>
                     </li>
                     <li class="nav-item">

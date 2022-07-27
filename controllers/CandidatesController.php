@@ -12,10 +12,15 @@ class CandidatesController extends Library\Controller {
             $this->subpage = 'view';
         }
         if($this->subpage == 'read'){
-            $data = $this->candidatesModel->getCandidate();
+            $id = isset($_GET['candidate']) ? htmlentities($_GET['candidate'],ENT_QUOTES) : '';
+            $data = $this->candidatesModel->singleWhereIdRow('candidates','id',$id);
+            if(!empty($data)){
+                $data['candidacies'] = $this->candidatesModel->candidacyAreas($id);
+            }
         }else{
             $data = $this->candidatesModel->getCandidates();
         }
+        // var_dump($data);
         return $this->view('candidates/'.$this->subpage,$data,$count);
     }
 }

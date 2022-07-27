@@ -15,11 +15,18 @@ class Database{
             echo 'ERROR: ' . $exception;
         }
     }
-
+    public function singleWhereIdRow($table,$column,$id){
+        $query = 'SELECT * FROM '.$table.' WHERE '.$column.' = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
     /*
     allWhereIdRow:: method used to get row(s) where id = :id
     */
-    public function allWhereIdRow($table,$column,$id){
+    public function allWhereIdRows($table,$column,$id){
         $data = [];
         $query = 'SELECT * FROM '.$table.' WHERE '.$column.' = :id';
         $stmt = $this->db->prepare($query);
