@@ -55,6 +55,11 @@ class Database{
         return $stmt->rowCount();
     }
 
+    public function allWhereRowEqual($table,$column1,$value1,$column2,$value2){
+        $query = 'SELECT * FROM '.$table.' WHERE '.$column1.' = '.$value1.' AND '.$column2.' = "'.$value2.'"';
+        return $this->executeGetRowsQuery($query);
+    }
+
     public function current(){
         $no = isset($_GET['no']) ? htmlentities($_GET['no'],ENT_QUOTES) : 1;
         return $no;

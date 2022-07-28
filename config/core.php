@@ -14,4 +14,4 @@
         header('location:?page=login');
     }
     //a list of navigatable pages in the application
-    $navigatable = ['login','home','vote','candidates'];
+    $navigatable = ['login','home','vote','candidates','results'];

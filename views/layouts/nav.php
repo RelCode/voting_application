@@ -14,8 +14,8 @@
                     <li class="nav-item <?= $_GET['page'] == 'vote' ? 'active' : '' ?>">
                         <a href="?page=vote" class="nav-link">Vote</a>
                     </li>
-                    <li class="nav-link" <?= $_GET['page'] == 'results' ? 'active' : '' ?>>
-                        <nav href="?page=results" class="nav-item">Results</nav>
+                    <li class="nav-item <?= $_GET['page'] == 'results' ? 'active' : '' ?>">
+                        <a href="?page=results" class="nav-link">Results</a>
                     </li>
                     <li class="nav-item">
                         <a href="?page=logout" class="nav-link">Logout</a>

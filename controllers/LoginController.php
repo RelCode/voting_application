@@ -18,25 +18,26 @@ class LoginController extends Library\Controller{
             return false;
         }
         //user voter ID Number to fetch corresponding voter
-        $voter = $this->loginModel->allWhereIdRow('voters','id_number',$post['id_number']);
+        $voter = $this->loginModel->singleWhereIdRow('voters','id_number',$post['id_number']);
         if(empty($voter)){//if the user is not found, we return a message
             $this->alertMessage($post['id_number'],'ID Number Not Registered');
             return false;
         }
-        if($voter[0]['soft_delete'] == 'Y'){
+        if($voter['soft_delete'] == 'Y'){
             $this->alertMessage($post['id_number'],'ID Account Was Removed');
             return false;
         }
         // var_dump('nigga jealous');
         //authentic provided PIN with the one stored in the database
-        if($voter[0]['pin'] !== $post['pin']){
+        if($voter['pin'] !== $post['pin']){
             $this->alertMessage($post['id_number'],'Incorrect ID Number/PIN');
             return false;
         }
         // //if voter has logged in, destroy all the sessions before creating new ones
         $_SESSION['loggedIn'] = true;
-        $_SESSION['voter']['names'] = $voter[0]['names'];
-        $_SESSION['voter']['id_number'] = $voter[0]['id_number'];
+        $_SESSION['voter']['names'] = $voter['names'];
+        $_SESSION['voter']['id_number'] = $voter['id_number'];
+        $_SESSION['voter']['location'] = $voter['area'];
         header('location:?page=home');
     }
 

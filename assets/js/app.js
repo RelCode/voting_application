@@ -132,3 +132,34 @@ function candidacyValues(id){
         document.querySelector('#in').value = runningIn.join('%20')
     }
 }
+
+function castVote(id){
+    if(id != '' && /[0-9]/.test(id)){
+        swal({
+            title: "Are you sure?",
+            text: 'Cast Your Vote',
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((castVote) => {
+            if (castVote) {
+                xmlHttp.onreadystatechange = function(){
+                    if(xmlHttp.responseText == '404'){
+                        swal({title:'Error',text:'Invalid Selection'})
+                    }else if(xmlHttp.responseText == '200'){
+                        swal('vote casted',{icon:'success'})
+                        .then((closed) => {
+                            location.reload();
+                        })
+                    }else{
+                        swal({title:'Error',text:'Server Could Not Fulfill Request'})
+                    }
+                }
+                xmlHttp.open('POST',actionUrl);
+                xmlHttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+                xmlHttp.send('action=cast&for='+new URL(window.location.href).searchParams.get('for')+'&candidate='+id)
+            }
+        });
+    }
+}
